@@ -118,8 +118,10 @@ mjost@ciccio:~/opt$
 ## Run first example 
 
 ```
-hadoop jar share/hadoop/mapreduce/hadoop-mapreduce-examples-2.7.1.jar wordcount / /tt
-hdfs dfs -ls /tt
+hdfs dfs -mkdir -p /data/input
+hdfs dfs -put etc/hadoop/* /data/input
+hdfs dfs -ls /data/input
+hadoop jar share/hadoop/mapreduce/hadoop-mapreduce-examples-2.7.1.jar wordcount /data/input /data/output
 
 ```
 
