@@ -1,5 +1,7 @@
 # README
 
+This project aims to help you get started with your own yarn cluster. 
+
 ## Set environment
 
 Add to your `~/.localrc` the following:
