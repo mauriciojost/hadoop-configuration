@@ -77,6 +77,44 @@ Then you can launch HDFS:
 start-dfs.sh
 ```
 
+It should log: 
+
+```
+mjost@tuca:~/opt/hadoop$ ./sbin/start-dfs.sh 
+Starting namenodes on [10.0.0.2]
+10.0.0.2: starting namenode, logging to /home/mjost/opt/zips/hadoop-2.7.1/logs/hadoop-mjost-namenode-tuca.out
+127.0.0.1: starting datanode, logging to /home/mjost/opt/zips/hadoop-2.7.1/logs/hadoop-mjost-datanode-tuca.out
+10.0.0.10: starting datanode, logging to /home/mjost/opt/zips/hadoop-2.7.1/logs/hadoop-mjost-datanode-ciccio.out
+Starting secondary namenodes [0.0.0.0]
+0.0.0.0: starting secondarynamenode, logging to /home/mjost/opt/zips/hadoop-2.7.1/logs/hadoop-mjost-secondarynamenode-tuca.out
+mjost@tuca:~/opt/hadoop$ 
+
+```
+
+In the master: 
+
+```
+mjost@tuca:~$ jps
+28784 org.apache.hadoop.yarn.server.nodemanager.NodeManager
+29642 org.apache.hadoop.hdfs.server.namenode.NameNode
+28641 org.apache.hadoop.yarn.server.resourcemanager.ResourceManager
+30220 sun.tools.jps.Jps
+30017 org.apache.hadoop.hdfs.server.namenode.SecondaryNameNode
+29810 org.apache.hadoop.hdfs.server.datanode.DataNode
+mjost@tuca:~$ 
+
+```
+
+In the slave:
+
+```
+mjost@ciccio:~/opt$ jps
+7802 Jps
+7726 DataNode
+7528 NodeManager
+mjost@ciccio:~/opt$ 
+```
+
 ## Run first example 
 
 ```
