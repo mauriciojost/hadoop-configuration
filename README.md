@@ -125,6 +125,17 @@ hadoop jar share/hadoop/mapreduce/hadoop-mapreduce-examples-2.7.1.jar wordcount 
 
 ```
 
+## See web portals
+
+Web portals are in: 
+
+```
+http://localhost:8088/cluster
+http://localhost:8088/cluster/nodes
+```
+
+If no nodes are listed you need to see the logs of your process to ensure everything is okay.
+
 ## Launch jobhistory server
 
 ```
