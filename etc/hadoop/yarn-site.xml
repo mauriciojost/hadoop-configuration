@@ -16,6 +16,6 @@
 <!-- Site specific YARN configuration properties -->
   <property>
     <name>yarn.resourcemanager.hostname</name>
-    <value>10.0.0.2</value>
+    <value>tuca</value>
   </property>
 </configuration>
