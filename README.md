@@ -13,6 +13,10 @@ export PATH=$HADOOP_HOME/sbin:$HADOOP_HOME/bin:$PATH
 
 ```
 
+## Ensure host names are available
+
+Either user /etc/hosts or set up a DNS server.
+
 ## Set slaves
 
 Modify the file `etc/hadoop/slaves` including all slave hosts' IP addresses.
@@ -23,15 +27,18 @@ Modify the file `etc/hadoop/slaves` including all slave hosts' IP addresses.
 Before you can start using HDFS you need to format the namenode, doing.
 
 ```
-hadoop namenode -format
+rm -fr /tmp/hadoop-*      # in all datanode hosts and namenode hosts
+hadoop namenode -format   # in namenode host only
 ```
+
+Also ensure the location where HDFS storage is in the local filesystem is clean too (often in `/tmp/hadoop-user/dfs`.
 
 ### Launch YARN
 
 Once this is done you can start by launching YARN:
 
 ```
-start-yarn.sh
+./sbin/start-yarn.sh
 ```
 
 It should give as output something like: 
@@ -74,7 +81,7 @@ mjost@ciccio:~/opt$
 Then you can launch HDFS: 
 
 ```
-start-dfs.sh
+./sbin/start-dfs.sh
 ```
 
 It should log: 
@@ -118,20 +125,37 @@ mjost@ciccio:~/opt$
 ## Run first example 
 
 ```
+hadoop dfsadmin -safemode leave
 hdfs dfs -mkdir -p /data/input
 hdfs dfs -put etc/hadoop/* /data/input
 hdfs dfs -ls /data/input
+hdfs fsck /data/input/slaves -files -blocks -locations
 hadoop jar share/hadoop/mapreduce/hadoop-mapreduce-examples-2.7.1.jar wordcount /data/input /data/output
 
 ```
 
 ## See web portals
 
-Web portals are in: 
+Web portals are often in: 
 
 ```
 http://localhost:8088/cluster
 http://localhost:8088/cluster/nodes
+```
+but you better follow URL shown by the job.
+
+```
+mjost@tuca:~/opt/hadoop$ hadoop jar share/hadoop/mapreduce/hadoop-mapreduce-examples-2.7.1.jar wordcount /data/input /data/output
+16/02/08 21:13:19 WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+16/02/08 21:13:20 INFO client.RMProxy: Connecting to ResourceManager at tuca/10.0.0.2:8032
+16/02/08 21:13:21 INFO input.FileInputFormat: Total input paths to process : 30
+16/02/08 21:13:22 INFO mapreduce.JobSubmitter: number of splits:30
+16/02/08 21:13:22 INFO mapreduce.JobSubmitter: Submitting tokens for job: job_1454962387578_0001
+16/02/08 21:13:23 INFO impl.YarnClientImpl: Submitted application application_1454962387578_0001
+16/02/08 21:13:23 INFO mapreduce.Job: The url to track the job: http://tuca:8088/proxy/application_1454962387578_0001/
+16/02/08 21:13:23 INFO mapreduce.Job: Running job: job_1454962387578_0001
+16/02/08 21:13:30 INFO mapreduce.Job: Job job_1454962387578_0001 running in uber mode : false
+
 ```
 
 If no nodes are listed you need to see the logs of your process to ensure everything is okay.
