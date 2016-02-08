@@ -17,6 +17,10 @@ export PATH=$HADOOP_HOME/sbin:$HADOOP_HOME/bin:$PATH
 
 Either user /etc/hosts or set up a DNS server.
 
+## Ensure configuration file is the same in all nodes
+
+Either mount an NFS filesystem, SSH mount, or sync before execution.
+
 ## Set slaves
 
 Modify the file `etc/hadoop/slaves` including all slave hosts' IP addresses.
